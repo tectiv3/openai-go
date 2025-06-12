@@ -453,13 +453,13 @@ func (c *Client) CreateChatCompletion(model string, messages []ChatMessage, opti
 	if options["stream"] != nil {
 		cb := options["stream"].(callback)
 		options["stream"] = true
-		_, err := c.postCB("v1/chat/completions", options, cb)
+		_, err := c.postCB("chat/completions", options, cb)
 
 		return ChatCompletion{}, err
 	}
 
 	var bytes []byte
-	if bytes, err = c.post("v1/chat/completions", options); err == nil {
+	if bytes, err = c.post("chat/completions", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -490,13 +490,13 @@ func (c *Client) CreateChatCompletionWithContext(ctx context.Context, model stri
 	if options["stream"] != nil {
 		cb := options["stream"].(callback)
 		options["stream"] = true
-		_, err := c.postCBWithContext(ctx, "v1/chat/completions", options, cb)
+		_, err := c.postCBWithContext(ctx, "chat/completions", options, cb)
 
 		return ChatCompletion{}, err
 	}
 
 	var bytes []byte
-	if bytes, err = c.postWithContext(ctx, "v1/chat/completions", options); err == nil {
+	if bytes, err = c.postWithContext(ctx, "chat/completions", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -525,6 +525,6 @@ func (c *Client) CreateChatCompletionStreamWithContext(ctx context.Context, mode
 	options["messages"] = messages
 	options["stream"] = true
 
-	_, err = c.postCBWithContext(ctx, "v1/chat/completions", options, cb)
+	_, err = c.postCBWithContext(ctx, "chat/completions", options, cb)
 	return err
 }

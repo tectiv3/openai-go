@@ -114,7 +114,7 @@ func (c *Client) CreateMessage(threadID, role, content string, options CreateMes
 	options["content"] = content
 
 	var bytes []byte
-	if bytes, err = c.post(fmt.Sprintf("v1/threads/%s/messages", threadID), options); err == nil {
+	if bytes, err = c.post(fmt.Sprintf("threads/%s/messages", threadID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -137,7 +137,7 @@ func (c *Client) CreateMessage(threadID, role, content string, options CreateMes
 // https://platform.openai.com/docs/api-reference/messages/getMessage
 func (c *Client) RetrieveMessage(threadID, messageID string) (response Message, err error) {
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/threads/%s/messages/%s", threadID, messageID), nil); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("threads/%s/messages/%s", threadID, messageID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -175,7 +175,7 @@ func (c *Client) ModifyMessage(threadID, messageID string, options ModifyMessage
 	}
 
 	var bytes []byte
-	if bytes, err = c.post(fmt.Sprintf("v1/threads/%s/messages/%s", threadID, messageID), options); err == nil {
+	if bytes, err = c.post(fmt.Sprintf("threads/%s/messages/%s", threadID, messageID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -249,7 +249,7 @@ func (c *Client) ListMessages(threadID string, options ListMessagesOptions) (res
 	}
 
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/threads/%s/messages", threadID), options); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("threads/%s/messages", threadID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -281,7 +281,7 @@ type MessageFile struct {
 // https://platform.openai.com/docs/api-reference/messages/getMessageFile
 func (c *Client) RetrieveMessageFile(threadID, messageID, fileID string) (response MessageFile, err error) {
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/threads/%s/messages/%s/files/%s", threadID, messageID, fileID), nil); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("threads/%s/messages/%s/files/%s", threadID, messageID, fileID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -355,7 +355,7 @@ func (c *Client) ListMessageFiles(threadID, messageID string, options ListMessag
 	}
 
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/threads/%s/messages/%s/files", threadID, messageID), options); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("threads/%s/messages/%s/files", threadID, messageID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil

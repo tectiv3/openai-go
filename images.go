@@ -124,7 +124,7 @@ func (c *Client) CreateImage(prompt string, options ImageOptions) (response Gene
 	options["prompt"] = prompt
 
 	var bytes []byte
-	if bytes, err = c.post("v1/images/generations", options); err == nil {
+	if bytes, err = c.post("images/generations", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -206,7 +206,7 @@ func (c *Client) CreateImageEdit(image FileParam, prompt string, options ImageEd
 	options["prompt"] = prompt
 
 	var bytes []byte
-	if bytes, err = c.post("v1/images/edits", options); err == nil {
+	if bytes, err = c.post("images/edits", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -279,7 +279,7 @@ func (c *Client) CreateImageVariation(image FileParam, options ImageVariationOpt
 	options["image"] = image
 
 	var bytes []byte
-	if bytes, err = c.post("v1/images/variations", options); err == nil {
+	if bytes, err = c.post("images/variations", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil

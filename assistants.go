@@ -131,7 +131,7 @@ func (c *Client) CreateAssistant(model string, options CreateAssistantOptions) (
 	options["model"] = model
 
 	var bytes []byte
-	if bytes, err = c.post("v1/assistants", options); err == nil {
+	if bytes, err = c.post("assistants", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -154,7 +154,7 @@ func (c *Client) CreateAssistant(model string, options CreateAssistantOptions) (
 // https://platform.openai.com/docs/api-reference/assistants/getAssistant
 func (c *Client) RetrieveAssistant(assistantID string) (response Assistant, err error) {
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/assistants/%s", assistantID), nil); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("assistants/%s", assistantID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -240,7 +240,7 @@ func (c *Client) ModifyAssistant(assistantID string, options ModifyAssistantOpti
 	}
 
 	var bytes []byte
-	if bytes, err = c.post(fmt.Sprintf("v1/assistants/%s", assistantID), options); err == nil {
+	if bytes, err = c.post(fmt.Sprintf("assistants/%s", assistantID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -271,7 +271,7 @@ type AssistantDeletionStatus struct {
 // https://platform.openai.com/docs/api-reference/assistants/deleteAssistant
 func (c *Client) DeleteAssistant(assistantID string) (response AssistantDeletionStatus, err error) {
 	var bytes []byte
-	if bytes, err = c.delete(fmt.Sprintf("v1/assistants/%s", assistantID), nil); err == nil {
+	if bytes, err = c.delete(fmt.Sprintf("assistants/%s", assistantID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -345,7 +345,7 @@ func (c *Client) ListAssistants(options ListAssistantsOptions) (response Assista
 	}
 
 	var bytes []byte
-	if bytes, err = c.get("v1/assistants", options); err == nil {
+	if bytes, err = c.get("assistants", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -379,7 +379,7 @@ type AssistantFile struct {
 // https://platform.openai.com/docs/api-reference/assistants/createAssistantFile
 func (c *Client) CreateAssistantFile(assistantID, fileID string) (response AssistantFile, err error) {
 	var bytes []byte
-	if bytes, err = c.post(fmt.Sprintf("v1/assistants/%s/files", assistantID), map[string]any{
+	if bytes, err = c.post(fmt.Sprintf("assistants/%s/files", assistantID), map[string]any{
 		"file_id": fileID,
 	}); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
@@ -404,7 +404,7 @@ func (c *Client) CreateAssistantFile(assistantID, fileID string) (response Assis
 // https://platform.openai.com/docs/api-reference/assistants/getAssistantFile
 func (c *Client) RetrieveAssistantFile(assistantID, fileID string) (response AssistantFile, err error) {
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/assistants/%s/files/%s", assistantID, fileID), nil); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("assistants/%s/files/%s", assistantID, fileID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -435,7 +435,7 @@ type AssistantFileDeletionStatus struct {
 // https://platform.openai.com/docs/api-reference/assistants/deleteAssistantFile
 func (c *Client) DeleteAssistantFile(assistantID, fileID string) (response AssistantFileDeletionStatus, err error) {
 	var bytes []byte
-	if bytes, err = c.delete(fmt.Sprintf("v1/assistants/%s/files/%s", assistantID, fileID), nil); err == nil {
+	if bytes, err = c.delete(fmt.Sprintf("assistants/%s/files/%s", assistantID, fileID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -509,7 +509,7 @@ func (c *Client) ListAssistantFiles(assistantID string, options ListAssistantFil
 	}
 
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/assistants/%s/files", assistantID), options); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("assistants/%s/files", assistantID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil

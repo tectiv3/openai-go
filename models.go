@@ -55,7 +55,7 @@ type ModelDeletionStatus struct {
 // https://platform.openai.com/docs/api-reference/models/list
 func (c *Client) ListModels() (response ModelsList, err error) {
 	var bytes []byte
-	if bytes, err = c.get("v1/models", nil); err == nil {
+	if bytes, err = c.get("models", nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -78,7 +78,7 @@ func (c *Client) ListModels() (response ModelsList, err error) {
 // https://platform.openai.com/docs/api-reference/models/retrieve
 func (c *Client) RetrieveModel(id string) (response Model, err error) {
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/models/%s", id), nil); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("models/%s", id), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -101,7 +101,7 @@ func (c *Client) RetrieveModel(id string) (response Model, err error) {
 // https://platform.openai.com/docs/api-reference/models/delete
 func (c *Client) DeleteFineTuneModel(model string) (response ModelDeletionStatus, err error) {
 	var bytes []byte
-	if bytes, err = c.delete(fmt.Sprintf("v1/models/%s", model), nil); err == nil {
+	if bytes, err = c.delete(fmt.Sprintf("models/%s", model), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil

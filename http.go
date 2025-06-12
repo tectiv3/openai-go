@@ -19,7 +19,7 @@ import (
 )
 
 const (
-	baseURL            = "https://api.openai.com"
+	baseURL            = "https://api.openai.com/v1"
 	defaultContentType = "application/json"
 
 	kContentType        = "Content-Type"
@@ -52,6 +52,12 @@ type Error struct {
 	Type    string  `json:"type"`
 	Param   any     `json:"param,omitempty"`
 	Code    *string `json:"code,omitempty"`
+}
+
+// GeminiError struct for gemini response error
+type GeminiError struct {
+	Message string `json:"message"`
+	Code    int    `json:"code"`
 }
 
 // Usage struct for reponses
@@ -541,9 +547,24 @@ func (c *Client) postCBWithContext(ctx context.Context, endpoint string, params 
 		errbody := struct {
 			Error Error `json:"error"`
 		}{}
-		if err := json.NewDecoder(resp.Body).Decode(&errbody); err != nil {
-			return nil, fmt.Errorf("failed to decode error body: %v", err)
+		if response, err = io.ReadAll(resp.Body); err == nil {
+			if c.Verbose {
+				log.Printf("API response for %s: '%s'", endpoint, string(response))
+			}
+			if err := json.Unmarshal(response, &errbody); err != nil {
+				geminiErr := []struct {
+					Error GeminiError `json:"error"`
+				}{}
+				if err := json.Unmarshal(response, &geminiErr); err != nil {
+					return nil, fmt.Errorf("failed to decode error body: %v", err)
+				}
+
+				return nil, fmt.Errorf(geminiErr[0].Error.Message)
+			}
+		} else {
+			return nil, err
 		}
+
 		return nil, errbody.Error.err()
 	}
 

@@ -115,7 +115,7 @@ func (c *Client) CreateRun(threadID, assistantID string, options CreateRunOption
 	options["assistant_id"] = assistantID
 
 	var bytes []byte
-	if bytes, err = c.post(fmt.Sprintf("v1/threads/%s/runs", threadID), options); err == nil {
+	if bytes, err = c.post(fmt.Sprintf("threads/%s/runs", threadID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -138,7 +138,7 @@ func (c *Client) CreateRun(threadID, assistantID string, options CreateRunOption
 // https://platform.openai.com/docs/api-reference/runs/getRun
 func (c *Client) RetrieveRun(threadID, runID string) (response Run, err error) {
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/threads/%s/runs/%s", threadID, runID), nil); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("threads/%s/runs/%s", threadID, runID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -176,7 +176,7 @@ func (c *Client) ModifyRun(threadID, runID string, options ModifyRunOptions) (re
 	}
 
 	var bytes []byte
-	if bytes, err = c.post(fmt.Sprintf("v1/threads/%s/runs/%s", threadID, runID), options); err == nil {
+	if bytes, err = c.post(fmt.Sprintf("threads/%s/runs/%s", threadID, runID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -250,7 +250,7 @@ func (c *Client) ListRuns(threadID string, options ListRunsOptions) (response Ru
 	}
 
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/threads/%s/runs", threadID), options); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("threads/%s/runs", threadID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -283,7 +283,7 @@ type ToolOutput struct {
 // https://platform.openai.com/docs/api-reference/runs/submitToolOutputs
 func (c *Client) SubmitToolOutputs(threadID, runID string, toolOutputs []ToolOutput) (response Run, err error) {
 	var bytes []byte
-	if bytes, err = c.post(fmt.Sprintf("v1/threads/%s/runs/%s/submit_tool_outputs", threadID, runID), map[string]any{
+	if bytes, err = c.post(fmt.Sprintf("threads/%s/runs/%s/submit_tool_outputs", threadID, runID), map[string]any{
 		"tool_outputs": toolOutputs,
 	}); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
@@ -312,7 +312,7 @@ func (c *Client) SubmitToolOutputs(threadID, runID string, toolOutputs []ToolOut
 // https://platform.openai.com/docs/api-reference/runs/cancelRun
 func (c *Client) CancelRun(threadID, runID string) (response Run, err error) {
 	var bytes []byte
-	if bytes, err = c.post(fmt.Sprintf("v1/threads/%s/runs/%s/cancel", threadID, runID), nil); err == nil {
+	if bytes, err = c.post(fmt.Sprintf("threads/%s/runs/%s/cancel", threadID, runID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -397,7 +397,7 @@ func (c *Client) CreateThreadAndRun(assistantID string, options CreateThreadAndR
 	options["assistant_id"] = assistantID
 
 	var bytes []byte
-	if bytes, err = c.post("v1/threads/runs", options); err == nil {
+	if bytes, err = c.post("threads/runs", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -522,7 +522,7 @@ type RunStep struct {
 // https://platform.openai.com/docs/api-reference/runs/getRunStep
 func (c *Client) RetrieveRunStep(threadID, runID, stepID string) (response RunStep, err error) {
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/threads/%s/runs/%s/steps/%s", threadID, runID, stepID), nil); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("threads/%s/runs/%s/steps/%s", threadID, runID, stepID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -596,7 +596,7 @@ func (c *Client) ListRunSteps(threadID, runID string, options ListRunStepsOption
 	}
 
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/threads/%s/runs/%s/steps", threadID, runID), options); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("threads/%s/runs/%s/steps", threadID, runID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil

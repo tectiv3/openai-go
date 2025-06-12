@@ -161,7 +161,7 @@ func (c *Client) CreateCompletion(model string, options CompletionOptions) (resp
 	options["model"] = model
 
 	var bytes []byte
-	if bytes, err = c.post("v1/completions", options); err == nil {
+	if bytes, err = c.post("completions", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil

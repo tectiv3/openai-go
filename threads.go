@@ -76,7 +76,7 @@ func (c *Client) CreateThread(options CreateThreadOptions) (response Thread, err
 	}
 
 	var bytes []byte
-	if bytes, err = c.post("v1/threads", options); err == nil {
+	if bytes, err = c.post("threads", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -99,7 +99,7 @@ func (c *Client) CreateThread(options CreateThreadOptions) (response Thread, err
 // https://platform.openai.com/docs/api-reference/threads/getThread
 func (c *Client) RetrieveThread(threadID string) (response Thread, err error) {
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/threads/%s", threadID), nil); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("threads/%s", threadID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -137,7 +137,7 @@ func (c *Client) ModifyThread(threadID string, options ModifyThreadOptions) (res
 	}
 
 	var bytes []byte
-	if bytes, err = c.post(fmt.Sprintf("v1/threads/%s", threadID), options); err == nil {
+	if bytes, err = c.post(fmt.Sprintf("threads/%s", threadID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -168,7 +168,7 @@ type ThreadDeletionStatus struct {
 // https://platform.openai.com/docs/api-reference/threads/deleteThread
 func (c *Client) DeleteThread(threadID string) (response ThreadDeletionStatus, err error) {
 	var bytes []byte
-	if bytes, err = c.delete(fmt.Sprintf("v1/threads/%s", threadID), nil); err == nil {
+	if bytes, err = c.delete(fmt.Sprintf("threads/%s", threadID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil

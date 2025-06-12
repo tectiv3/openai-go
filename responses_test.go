@@ -225,8 +225,8 @@ func TestCreateResponseMock(t *testing.T) {
 
 	// Create test server
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/v1/responses" {
-			t.Errorf("Expected path /v1/responses, got %s", r.URL.Path)
+		if r.URL.Path != "/responses" {
+			t.Errorf("Expected path /responses, got %s", r.URL.Path)
 		}
 		if r.Method != "POST" {
 			t.Errorf("Expected POST method, got %s", r.Method)

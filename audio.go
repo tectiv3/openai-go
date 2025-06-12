@@ -67,7 +67,7 @@ func (c *Client) CreateSpeech(model string, input string, voice SpeechVoice, opt
 	options["voice"] = voice
 
 	var bytes []byte
-	if bytes, err = c.post("v1/audio/speech", options); err == nil {
+	if bytes, err = c.post("audio/speech", options); err == nil {
 		return bytes, nil
 	} else {
 		var res CommonResponse
@@ -136,7 +136,7 @@ func (c *Client) CreateTranscription(file FileParam, model string, options Trans
 	options["model"] = model
 
 	var bytes []byte
-	if bytes, err = c.post("v1/audio/transcriptions", options); err == nil {
+	if bytes, err = c.post("audio/transcriptions", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -198,7 +198,7 @@ func (c *Client) CreateTranslation(file FileParam, model string, options Transla
 	options["model"] = model
 
 	var bytes []byte
-	if bytes, err = c.post("v1/audio/translations", options); err == nil {
+	if bytes, err = c.post("audio/translations", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil

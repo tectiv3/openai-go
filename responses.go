@@ -248,12 +248,12 @@ func (c *Client) CreateResponse(model string, input any, options ResponseOptions
 	if options["stream"] != nil {
 		cb := options["stream"].(responseCallback)
 		options["stream"] = true
-		_, err := c.postCBResponses("v1/responses", options, cb)
+		_, err := c.postCBResponses("responses", options, cb)
 		return Response{}, err
 	}
 
 	var bytes []byte
-	if bytes, err = c.post("v1/responses", options); err == nil {
+	if bytes, err = c.post("responses", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -277,12 +277,12 @@ func (c *Client) CreateResponseWithContext(ctx context.Context, model string, in
 	if options["stream"] != nil {
 		cb := options["stream"].(responseCallback)
 		options["stream"] = true
-		_, err := c.postCBResponsesWithContext(ctx, "v1/responses", options, cb)
+		_, err := c.postCBResponsesWithContext(ctx, "responses", options, cb)
 		return Response{}, err
 	}
 
 	var bytes []byte
-	if bytes, err = c.postWithContext(ctx, "v1/responses", options); err == nil {
+	if bytes, err = c.postWithContext(ctx, "responses", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -304,7 +304,7 @@ func (c *Client) CreateResponseStream(model string, input any, options ResponseO
 	options["input"] = input
 	options["stream"] = true
 
-	_, err = c.postCBResponses("v1/responses", options, cb)
+	_, err = c.postCBResponses("responses", options, cb)
 	return err
 }
 
@@ -317,7 +317,7 @@ func (c *Client) CreateResponseStreamWithContext(ctx context.Context, model stri
 	options["input"] = input
 	options["stream"] = true
 
-	_, err = c.postCBResponsesWithContext(ctx, "v1/responses", options, cb)
+	_, err = c.postCBResponsesWithContext(ctx, "responses", options, cb)
 	return err
 }
 

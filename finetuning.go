@@ -108,7 +108,7 @@ func (c *Client) CreateFineTuningJob(trainingFileID, model string, options FineT
 	options["model"] = model
 
 	var bytes []byte
-	if bytes, err = c.post("v1/fine_tuning/jobs", options); err == nil {
+	if bytes, err = c.post("fine_tuning/jobs", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -135,7 +135,7 @@ func (c *Client) ListFineTuningJobs(options FineTuningJobsOptions) (response Fin
 	}
 
 	var bytes []byte
-	if bytes, err = c.get("v1/fine_tuning/jobs", options); err == nil {
+	if bytes, err = c.get("fine_tuning/jobs", options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -158,7 +158,7 @@ func (c *Client) ListFineTuningJobs(options FineTuningJobsOptions) (response Fin
 // https://platform.openai.com/docs/api-reference/fine-tuning/retrieve
 func (c *Client) RetrieveFineTuningJob(fineTuningJobID string) (response FineTuningJob, err error) {
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/fine_tuning/jobs/%s", fineTuningJobID), nil); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("fine_tuning/jobs/%s", fineTuningJobID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -181,7 +181,7 @@ func (c *Client) RetrieveFineTuningJob(fineTuningJobID string) (response FineTun
 // https://platform.openai.com/docs/api-reference/fine-tuning/cancel
 func (c *Client) CancelFineTuningJob(fineTuningJobID string) (response FineTuningJob, err error) {
 	var bytes []byte
-	if bytes, err = c.post(fmt.Sprintf("v1/fine_tuning/jobs/%s/cancel", fineTuningJobID), nil); err == nil {
+	if bytes, err = c.post(fmt.Sprintf("fine_tuning/jobs/%s/cancel", fineTuningJobID), nil); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
@@ -244,7 +244,7 @@ func (o FineTuningJobEventsOptions) SetLimit(limit int) FineTuningJobEventsOptio
 // https://platform.openai.com/docs/api-reference/fine-tuning/list-events
 func (c *Client) ListFineTuningJobEvents(fineTuningJobID string, options FineTuningJobEventsOptions) (response FineTuningJobEvents, err error) {
 	var bytes []byte
-	if bytes, err = c.get(fmt.Sprintf("v1/fine_tuning/jobs/%s/events", fineTuningJobID), options); err == nil {
+	if bytes, err = c.get(fmt.Sprintf("fine_tuning/jobs/%s/events", fineTuningJobID), options); err == nil {
 		if err = json.Unmarshal(bytes, &response); err == nil {
 			if response.Error == nil {
 				return response, nil
