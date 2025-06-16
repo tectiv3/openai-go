@@ -83,7 +83,7 @@ type ResponseTokensDetails struct {
 // ResponseMessage represents a message input for the responses API
 type ResponseMessage struct {
 	Role    string `json:"role"`
-	Content string `json:"content"`
+	Content any    `json:"content,omitempty"` // NOTE: string | []ChatMessageContent
 }
 
 // ResponseToolChoice represents tool choice options

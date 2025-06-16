@@ -61,6 +61,8 @@ type ChatMessageContent struct {
 
 	Text     *string `json:"text,omitempty"`
 	ImageURL any     `json:"image_url,omitempty"`
+	Filename *string `json:"filename,omitempty"`  // optional filename for the file data
+	FileData *string `json:"file_data,omitempty"` // base64-encoded file data
 }
 
 // NewChatMessageContentWithText returns a ChatMessageContent struct with given `text`.
@@ -91,6 +93,16 @@ func NewChatMessageContentWithBytes(bytes []byte) ChatMessageContent {
 		ImageURL: map[string]string{
 			"url": bytesToDataURL(bytes),
 		},
+	}
+}
+
+// NewChatMessageContentFileWithBytes returns a ChatMessageContent struct with given file `bytes`.
+func NewChatMessageContentFileWithBytes(bytes []byte, filename string) ChatMessageContent {
+	base64 := bytesToDataURL(bytes)
+	return ChatMessageContent{
+		Type:     "input_file",
+		Filename: &filename,
+		FileData: &base64,
 	}
 }
 
