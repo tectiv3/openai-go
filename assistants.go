@@ -30,8 +30,9 @@ type Assistant struct {
 //
 // https://platform.openai.com/docs/api-reference/assistants/object#assistants/object-tools
 type Tool struct {
-	Type     string        `json:"type"`
-	Function *ToolFunction `json:"function,omitempty"`
+	Type      string         `json:"type"`
+	Function  *ToolFunction  `json:"function,omitempty"`
+	Container *ToolContainer `json:"container,omitempty"`
 }
 
 // NewCodeInterpreterTool returns a tool with type: 'code_interpreter'.
@@ -61,6 +62,20 @@ func NewBuiltinTool(fn string) Tool {
 	return Tool{
 		Type: fn,
 	}
+}
+
+// NewBuiltinTool returns a tool with a specified type.
+func NewBuiltinToolWithContainer(fn string, tp string) Tool {
+	container := ToolContainer{Type: tp}
+
+	return Tool{
+		Type:      fn,
+		Container: &container,
+	}
+}
+
+type ToolContainer struct {
+	Type string `json:"type"`
 }
 
 // ToolFunction struct for Tool struct

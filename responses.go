@@ -58,11 +58,15 @@ type OutputContent struct {
 
 // Annotation represents an annotation in the content
 type Annotation struct {
-	Type       string `json:"type"`
-	StartIndex int    `json:"start_index,omitempty"`
-	EndIndex   int    `json:"end_index,omitempty"`
-	URL        string `json:"url,omitempty"`
-	Title      string `json:"title,omitempty"`
+	Type        string `json:"type"`
+	Title       string `json:"title,omitempty"`
+	FileID      string `json:"file_id,omitempty"`
+	Index       any    `json:"index,omitempty"`
+	ContainerID string `json:"container_id,omitempty"`
+	StartIndex  int    `json:"start_index,omitempty"`
+	EndIndex    int    `json:"end_index,omitempty"`
+	Filename    string `json:"filename,omitempty"`
+	URL         string `json:"url,omitempty"`
 }
 
 // ResponseUsage represents token usage information
@@ -319,6 +323,12 @@ func (c *Client) CreateResponseStreamWithContext(ctx context.Context, model stri
 
 	_, err = c.postCBResponsesWithContext(ctx, "responses", options, cb)
 	return err
+}
+
+func (c *Client) RetrieveContainerFile(containerID, fileID string) (bytes []byte, err error) {
+	bytes, err = c.get(fmt.Sprintf("containers/%s/files/%s/content", containerID, fileID), nil)
+
+	return bytes, err
 }
 
 // Helper functions for input creation
